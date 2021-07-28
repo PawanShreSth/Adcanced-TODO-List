@@ -60,9 +60,8 @@ function renderTodo(todo) {
     listItem.dataset.id = todo.id;
     textElement.innerText = todo.name;
 
-    if (todo.complete) {
-        checkbox.checked = true;
-    }
+    checkbox.checked = todo.complete;
+    
 
     list.appendChild(templateClone)
 }
