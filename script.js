@@ -2,6 +2,9 @@ const form = document.querySelector('#new-todo-form');
 const todoInput = document.querySelector('#todo-input');
 const template = document.querySelector('#list-item-template');
 const list = document.querySelector('#list')
+let todos = [];
+const LOCAL_STORAGE_PREFIX = 'ADVANCED_TODO_LIST';
+const TODOS_STORAGE_KEY = `${LOCAL_STORAGE_PREFIX}-todos`;
 
 form.addEventListener('submit', e => {
     e.preventDefault();
@@ -12,8 +15,9 @@ form.addEventListener('submit', e => {
 
     if (todoName === '') return;
     
+    todos.push(todoName);
     renderTodo(todoName);
-
+    saveTodos();
     todoInput.value = "";
 
 });
@@ -21,9 +25,12 @@ form.addEventListener('submit', e => {
 function renderTodo(todoName) {
     const templateClone = template.content.cloneNode(true);
     const textElement = templateClone.querySelector('[data-list-item-text]');
-    
-    textElement.innerText = todoName;
 
+    textElement.innerText = todoName;
     list.appendChild(templateClone)
+}
+
+function saveTodos() {
+    localStorage.setItem(TODOS_STORAGE_KEY, JSON.stringify(todos));
 }
 
